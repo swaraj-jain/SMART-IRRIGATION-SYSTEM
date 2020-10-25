@@ -1,72 +1,47 @@
 <html>
 <head>
-<title>Smart Irrigation System</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+<title>WiFi controlled LED</title>
+<script src="jquery.js"></script>
 
 </head>
 <body>
-
-
-<h1><u>Smart Irrigation System</u></h1>
-<p><font color="yellow" style="">
-	To start the sensor system
-	</font></p>
-<button onclick="myFunction()">
-	START
-</button>
-<script>
-function myFunction() {
-  alert("Your Command has been accepted, the sensors are turned on!");
-}
-</script>
-<br>
-<br>
-<p><font color="yellow">
-	To stop the sensor system
-
-	</font></p>
-<button onclick="myFunction2()">
-	STOP
-</button>
-<script>
-function myFunction2() {
-  alert("Your Command has been accepted, the sensors are turned off!");
-}
-</script>
-<br>
-<br>
-<p><font color="yellow">
-	To sprinkle fertilizers 
-	
-	</font></p>
-<button onclick="myFunction3()">
-	ON
-</button>
-<script>
-function myFunction3() {
-  alert("Your Command has been accepted, released!");
-}
-</script>
-<br>
-<br>
-
-<button onclick="myFunction4()">
-	OFF
-</button>
-<script>
-function myFunction4() {
-  alert("Your Command has been accepted, stoped!");
-}
-</script>
-<h2>
-   
-
-<script >
-	
-	for(var i=0;i<10;i++)
-	{ console.log(i);
-
-	}
-   </script>
+<h2> <i> WiFi Controlled Irrigation System using Arduino and ESP8266 </i> </h2>
+<h4> <i> Enter the IP address of ESP8266 </i> </h4>
+<div style="margin: 0; width:400px; height:30px;">
+<FORM NAME="form" ACTION="" METHOD="GET">
+ESP8266 IP Address:
+<INPUT TYPE="text" NAME="inputbox" VALUE="" />
+</FORM>
+</div>
+<h3> Click to toggle Motor! </h3>
+<input type="button" NAME="butname" value="Turn ON Motor" />
+<p>STATUS: Motor is OFF!</p>
 </body>
+<script>
+$.ajaxSetup({timeout:1000});
+btn = document.querySelector('input[name="butname"]');
+txt = document.querySelector('p');
+btn.addEventListener('click', irri);
+
+function irri()
+{
+	var val1 = 'OFF';
+	if (btn.value === 'Turn OFF Motor') 
+	{
+	btn.value = 'Turn ON Motor';
+	val1 = 'OFF';
+	txt.textContent = 'STATUS: Motor is OFF!';
+	} 
+	else 
+	{
+    	btn.value = 'Turn OFF Motor';
+	val1 = 'ON';
+    	txt.textContent = 'STATUS: Motor is ON!';
+	}
+	TextVar = form.inputbox.value;
+	ArduinoVar = "http://" + TextVar + ":80/";
+	$.get( ArduinoVar, {irr: val1})	;
+	{Connection: close};
+}
+</script>
 </html>
